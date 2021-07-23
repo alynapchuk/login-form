@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import LoginForm from './components/LoginForm';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      credentials: {
+        huxley: {
+          password: 'blah'
+        }
+      }
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <LoginForm handleSubmit={this._checkCredentials} />
+      </div>
+    );
+  }
+
+  _checkCredentials = (username, password) => {
+    console.log('checking credentials');
+    const userObj = this.state.credentials[username];
+    if (userObj && (userObj.password === password)) {
+      return {
+        isValid: true,
+        message: 'Login Successful!'
+      };
+    } else {
+      return {
+        isValid: false,
+        message: 'Login Failed'
+      };
+    }
+  }
+
 }
 
 export default App;
